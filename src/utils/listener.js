@@ -1,5 +1,8 @@
 import { defaultStartEvent, defaultMovingEvent, defaultEndEvent } from './defaultEvent.js';
 
+let ticking_s = false;
+let ticking_m = false;
+let ticking_e = false;
 let debounceStart = 0;
 let debounceCurrent = 0;
 
@@ -13,8 +16,15 @@ function registerListener(ed, evtType, evtPhase) {
     case 'startEvent':
       eventBundle = () => {
         debounceStart = new Date().getTime();
-
-        if (ed[evtPhase]) ed[evtPhase].bind(event, ed.edInfo)();        
+        if (ed[evtPhase]) {
+          if (!ticking_s) {
+            window.requestAnimationFrame(() => {
+              ed[evtPhase].bind(event, ed.edInfo)();
+              ticking_s = false;
+            });
+          }
+          ticking_s = true;
+        }
         defaultStartEvent(ed, evtType);
       }
       break;  
@@ -23,7 +33,15 @@ function registerListener(ed, evtType, evtPhase) {
       eventBundle = () => {
         debounceCurrent = new Date().getTime();
         if (debounceCurrent - debounceStart > ed.debounce) {
-          if (ed[evtPhase]) ed[evtPhase].bind(event, ed.edInfo)();
+          if (ed[evtPhase]) {
+            if (!ticking_m) {
+              window.requestAnimationFrame(() => {
+                ed[evtPhase].bind(event, ed.edInfo)();
+                ticking_m = false;
+              });
+            }
+            ticking_m = true;
+          }
           defaultMovingEvent(ed, evtType);
           debounceStart = debounceCurrent;
         }
@@ -32,7 +50,15 @@ function registerListener(ed, evtType, evtPhase) {
 
     case 'endEvent':
       eventBundle = () => {
-        if (ed[evtPhase]) ed[evtPhase].bind(event, ed.edInfo)();        
+        if (ed[evtPhase]) {
+          if (!ticking_e) {
+            window.requestAnimationFrame(() => {
+              ed[evtPhase].bind(event, ed.edInfo)();
+              ticking_e = false;
+            });
+          }
+          ticking_e = true;
+        }
         defaultEndEvent(ed, evtType);
       }
       break;
