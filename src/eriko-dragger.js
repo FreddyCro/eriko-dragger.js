@@ -1,4 +1,4 @@
-import { addStartListener, addMoveListener, addEndListener } from './utils/listener.js';
+import { addStartListener, addMoveListener, addEndListener, removeListener } from './utils/listener.js';
 
 function setEvent(ed, inputEvent, type) {
   if (typeof inputEvent !== 'function') console.error('inputEvent must be a funciton.');
@@ -47,10 +47,15 @@ class ErikoDragger {
     setEvent(this, inputEvent, 'endEvent');
   }
 
+  removeDragger() {
+    if (!this.target) { console.error('target cannot be empty.'); return }
+    removeListener.bind(this)();
+  }
+
   launch() {
-    addStartListener(this);
-    addMoveListener(this);
-    addEndListener(this);
+    addStartListener.bind(this)();
+    addMoveListener.bind(this)();
+    addEndListener.bind(this)();
   }
 }
 

@@ -6,15 +6,19 @@ let ticking_e = false;
 let debounceStart = 0;
 let debounceCurrent = 0;
 
+
+let eventBundle_start = null;
+let eventBundle_move = null;
+let eventBundle_end = null;
+
 function registerListener(ed, evtType, evtPhase) {
   if (!ed.container) console.error('container cannot be empty.');
   if (!ed.target) console.error('target cannot be empty.');
   if (!ed.readyStatus || !ed[evtPhase]) return;
   
-  let eventBundle = null
   switch (evtPhase) {
     case 'startEvent':
-      eventBundle = () => {
+      eventBundle_start = () => {
         debounceStart = new Date().getTime();
         if (ed[evtPhase]) {
           if (!ticking_s) {
@@ -27,10 +31,11 @@ function registerListener(ed, evtType, evtPhase) {
         }
         defaultStartEvent(ed, evtType);
       }
+      ed.target.addEventListener(evtType, eventBundle_start, { passive: true });
       break;  
 
     case 'moveEvent':
-      eventBundle = () => {
+      eventBundle_move = () => {
         debounceCurrent = new Date().getTime();
         if (debounceCurrent - debounceStart > ed.debounce) {
           if (ed[evtPhase]) {
@@ -46,10 +51,11 @@ function registerListener(ed, evtType, evtPhase) {
           debounceStart = debounceCurrent;
         }
       }
+      ed.target.addEventListener(evtType, eventBundle_move, { passive: true });
       break;
 
     case 'endEvent':
-      eventBundle = () => {
+      eventBundle_end = () => {
         if (ed[evtPhase]) {
           if (!ticking_e) {
             window.requestAnimationFrame(() => {
@@ -61,25 +67,32 @@ function registerListener(ed, evtType, evtPhase) {
         }
         defaultEndEvent(ed, evtType);
       }
+      ed.target.addEventListener(evtType, eventBundle_end, { passive: true });
       break;
   
     default: break;
   }
-
-  ed.container.addEventListener(evtType, eventBundle, { passive: true });
 }
 
-function addStartListener(dr) {
-  registerListener(dr, 'touchstart', 'startEvent');
-  registerListener(dr, 'dragstart', 'startEvent');
+function addStartListener() {
+  registerListener(this, 'touchstart', 'startEvent');
+  registerListener(this, 'dragstart', 'startEvent');
 }
-function addMoveListener(dr) {
-  registerListener(dr, 'touchmove', 'moveEvent');
-  registerListener(dr, 'drag', 'moveEvent');
+function addMoveListener() {
+  registerListener(this, 'touchmove', 'moveEvent');
+  registerListener(this, 'drag', 'moveEvent');
 }
-function addEndListener(dr) {
-  registerListener(dr, 'touchend', 'endEvent');
-  registerListener(dr, 'dragend', 'endEvent');
+function addEndListener() {
+  registerListener(this, 'touchend', 'endEvent');
+  registerListener(this, 'dragend', 'endEvent');
+}
+function removeListener() {
+  this.target.removeEventListener('touchstart', eventBundle_start, { passive: true });
+  this.target.removeEventListener('dragstart', eventBundle_start, { passive: true });
+  this.target.removeEventListener('touchmove', eventBundle_move, { passive: true });
+  this.target.removeEventListener('drag', eventBundle_move, { passive: true });
+  this.target.removeEventListener('touchend', eventBundle_end, { passive: true });
+  this.target.removeEventListener('dragend', eventBundle_end, { passive: true });
 }
 
-export { addStartListener, addMoveListener, addEndListener };
+export { addStartListener, addMoveListener, addEndListener, removeListener };

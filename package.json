@@ -2,13 +2,13 @@
   "name": "eriko-dragger.js",
   "version": "1.0.0",
   "description": "A lib to handle dragging event",
-  "main": "dist/eriko-scroller.min.js",
+  "main": "dist/eriko-dragger.min.js",
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
-    "dist/eriko-scroller.min.js",
+    "dist/eriko-dragger.min.js",
     "package.json"
   ],
   "repository": {
