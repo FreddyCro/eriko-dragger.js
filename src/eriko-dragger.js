@@ -47,6 +47,9 @@ class ErikoDragger {
   setEndEvent(inputEvent) {
     setEvent(this, inputEvent, 'endEvent');
   }
+  setDebounce(inputDebounce) {
+    this.debounce = inputDebounce;
+  }
 
   removeDragger() {
     if (!this.target) { console.error('target cannot be empty.'); return }
