@@ -1,7 +1,7 @@
 # 【eriko-dragger.js】
 
 ```text=
-version: v1.0.3
+version: v1.0.4
 last updated: 2020.5.25
 ```
 
@@ -89,7 +89,7 @@ name | type | optional | default
 ### event (default parameter)
 
 name | type | description
---- | --- | --- 
+--- | --- | ---
 `dragStartCoord` | `object` | {x, y}
 `dragMovingCoord` | `object` | {x, y}
 `dragDirection` | `string` | vertical direction + horizontal directoin
