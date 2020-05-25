@@ -26,7 +26,13 @@ function calcDirection(sx, sy, ex, ey) {
 }
 
 function calcTranslate(sx, sy, ex, ey) {
-  return `translate(${ex - sx}px,${ey - sy}px)`;
+  const x = ex - sx;
+  const y = ey - sy;
+  return {
+    x,
+    y,
+    translate: `translate(${x}px,${y}px)`
+  };
 }
 
 export {

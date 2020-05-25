@@ -5,6 +5,7 @@ let previousCoord = null;
 
 function defaultStartEvent(ed, evtType) {
   startTimestamp = new Date().getTime();
+  ed.edInfo.sourceEvent = event;
   switch (evtType) {
     case 'touchstart':
       ed.edInfo.dragStartCoord = {
@@ -120,6 +121,7 @@ function defaultMovingEvent(ed, evtType) {
 
   const currentTimestamp = new Date().getTime();
   ed.edInfo.dragDuration = currentTimestamp - startTimestamp;
+  ed.edInfo.sourceEvent = event;
 
   updateMovingCoord.bind(event)();
   updateCalcInfo.bind(event)();
@@ -134,6 +136,7 @@ function defaultEndEvent(ed) {
   ed.edInfo.dragDistanceFromPrev = 0;
   ed.edInfo.dragDuration = 0;
   ed.edInfo.dragTranslate = null;
+  ed.edInfo.sourceEvent = null;
   previousCoord = null;
   startTimestamp = 0;
 }

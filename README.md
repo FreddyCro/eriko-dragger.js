@@ -1,8 +1,8 @@
 # 【eriko-dragger.js】
 
 ```text=
-version: v1.0.0
-last updated: 2020.5.21
+version: v1.0.1
+last updated: 2020.5.25
 ```
 
 ## Availability
@@ -53,6 +53,16 @@ ed.launch();
 ed.removeDragger();
 ```
 
+### Get Drag Info
+
+Use first default parameter.
+
+```javascript=
+function myMoveEvent(event) {
+  console.log(event);
+}
+```
+
 ## document
 
 ### container
@@ -75,3 +85,17 @@ name | type | optional | default
 `moveEvent` | `function` | yes |
 `endEvent` | `function` | yes |
 `debounce` | `number` | yes | 300
+
+### event (default parameter)
+
+name | type | description
+--- | --- | --- | ---
+`dragStartCoord` | `object` | {x, y}
+`dragMovingCoord` | `object` | {x, y}
+`dragDirection` | `string` | vertical direction + horizontal directoin
+`dragDirectionFromPrev` | `string` | vertical direction + horizontal directoin
+`dragDistance` | `number` | Drag distance from start position
+`dragDistanceFromPrev` | `number` | Drag distance from previous position
+`dragDuration` | `number` | Drag duration
+`dragTranslate` | `string` | {x, y, translate}
+`sourceEvent` | `object` | Original event

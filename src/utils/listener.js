@@ -23,12 +23,14 @@ function registerListener(ed, evtType, evtPhase) {
         if (ed[evtPhase]) {
           if (!ticking_s) {
             window.requestAnimationFrame(() => {
+              // execute custom event
               ed[evtPhase].bind(event, ed.edInfo)();
               ticking_s = false;
             });
           }
           ticking_s = true;
         }
+        // execute default event
         defaultStartEvent(ed, evtType);
       }
       ed.target.addEventListener(evtType, eventBundle_start, { passive: true });
@@ -41,12 +43,14 @@ function registerListener(ed, evtType, evtPhase) {
           if (ed[evtPhase]) {
             if (!ticking_m) {
               window.requestAnimationFrame(() => {
+                // execute custom event
                 ed[evtPhase].bind(event, ed.edInfo)();
                 ticking_m = false;
               });
             }
             ticking_m = true;
           }
+          // execute default event
           defaultMovingEvent(ed, evtType);
           debounceStart = debounceCurrent;
         }
@@ -59,12 +63,14 @@ function registerListener(ed, evtType, evtPhase) {
         if (ed[evtPhase]) {
           if (!ticking_e) {
             window.requestAnimationFrame(() => {
+              // execute custom event
               ed[evtPhase].bind(event, ed.edInfo)();
               ticking_e = false;
             });
           }
           ticking_e = true;
         }
+        // execute default event
         defaultEndEvent(ed, evtType);
       }
       ed.target.addEventListener(evtType, eventBundle_end, { passive: true });

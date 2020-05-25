@@ -22,6 +22,7 @@ class ErikoDragger {
       dragDistanceFromPrev: 0,
       dragDuration: 0,
       dragTranslate: null,
+      sourceEvent: null,
     }
   }
 
