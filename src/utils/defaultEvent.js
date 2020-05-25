@@ -9,23 +9,23 @@ function defaultStartEvent(ed, evtType) {
   switch (evtType) {
     case 'touchstart':
       ed.edInfo.dragStartCoord = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY
+        x: event.touches[0].screenX,
+        y: event.touches[0].screenY
       }
       previousCoord = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY
+        x: event.touches[0].screenX,
+        y: event.touches[0].screenY
       }
       break;
       
     case 'dragstart':
       ed.edInfo.dragStartCoord = {
-        x: event.clientX,
-        y: event.clientY
+        x: event.screenX,
+        y: event.screenY
       }
       previousCoord = {
-        x: event.clientX,
-        y: event.clientY
+        x: event.screenX,
+        y: event.screenY
       }
       break;
   
@@ -38,15 +38,15 @@ function defaultMovingEvent(ed, evtType) {
       case 'touchmove':
         // moving coordinates
         ed.edInfo.dragMovingCoord = {
-          x: event.touches[0].clientX,
-          y: event.touches[0].clientY
+          x: event.touches[0].screenX,
+          y: event.touches[0].screenY
         }
         break;
         
       case 'drag':
         ed.edInfo.dragMovingCoord = {
-          x: event.clientX,
-          y: event.clientY
+          x: event.screenX,
+          y: event.screenY
         }
         break;
     
@@ -101,15 +101,15 @@ function defaultMovingEvent(ed, evtType) {
       case 'touchmove':
         // update previous coordinates
         previousCoord = {
-          x: event.touches[0].clientX,
-          y: event.touches[0].clientY
+          x: event.touches[0].screenX,
+          y: event.touches[0].screenY
         }
         break;
         
       case 'drag':
         previousCoord = {
-          x: event.clientX,
-          y: event.clientY
+          x: event.screenX,
+          y: event.screenY
         }
         break;
     
