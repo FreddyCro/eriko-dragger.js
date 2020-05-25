@@ -89,7 +89,7 @@ name | type | optional | default
 ### event (default parameter)
 
 name | type | description
---- | --- | --- | ---
+--- | --- | --- 
 `dragStartCoord` | `object` | {x, y}
 `dragMovingCoord` | `object` | {x, y}
 `dragDirection` | `string` | vertical direction + horizontal directoin
