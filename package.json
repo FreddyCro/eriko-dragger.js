@@ -1,6 +1,6 @@
 {
   "name": "eriko-dragger.js",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A lib to handle dragging event",
   "main": "dist/eriko-dragger.min.js",
   "scripts": {

@@ -18,7 +18,7 @@ function defaultStartEvent(ed, evtType) {
       }
       break;
       
-    case 'dragstart':
+    case 'mousedown':
       ed.edInfo.dragStartCoord = {
         x: event.screenX,
         y: event.screenY
@@ -43,7 +43,7 @@ function defaultMovingEvent(ed, evtType) {
         }
         break;
         
-      case 'drag':
+      case 'mousemove':
         ed.edInfo.dragMovingCoord = {
           x: event.screenX,
           y: event.screenY
@@ -106,7 +106,7 @@ function defaultMovingEvent(ed, evtType) {
         }
         break;
         
-      case 'drag':
+      case 'mouseup':
         previousCoord = {
           x: event.screenX,
           y: event.screenY

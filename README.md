@@ -1,8 +1,8 @@
 # 【eriko-dragger.js】
 
 ```text=
-version: v1.0.4
-last updated: 2020.5.25
+version: v1.1.0
+last updated: 2020.5.26
 ```
 
 ## Availability

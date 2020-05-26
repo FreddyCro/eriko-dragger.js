@@ -6,6 +6,7 @@ let ticking_e = false;
 let debounceStart = 0;
 let debounceCurrent = 0;
 
+let isMouseDown = false;
 
 let eventBundle_start = null;
 let eventBundle_move = null;
@@ -19,6 +20,7 @@ function registerListener(ed, evtType, evtPhase) {
   switch (evtPhase) {
     case 'startEvent':
       eventBundle_start = () => {
+        isMouseDown = true;
         debounceStart = new Date().getTime();
         if (ed[evtPhase]) {
           if (!ticking_s) {
@@ -38,6 +40,8 @@ function registerListener(ed, evtType, evtPhase) {
 
     case 'moveEvent':
       eventBundle_move = () => {
+        if (!isMouseDown) return;
+
         debounceCurrent = new Date().getTime();
         if (debounceCurrent - debounceStart > ed.debounce) {
           if (ed[evtPhase]) {
@@ -60,6 +64,7 @@ function registerListener(ed, evtType, evtPhase) {
 
     case 'endEvent':
       eventBundle_end = () => {
+        isMouseDown = false;
         if (ed[evtPhase]) {
           if (!ticking_e) {
             window.requestAnimationFrame(() => {
@@ -82,23 +87,26 @@ function registerListener(ed, evtType, evtPhase) {
 
 function addStartListener() {
   registerListener(this, 'touchstart', 'startEvent');
-  registerListener(this, 'dragstart', 'startEvent');
+  registerListener(this, 'mousedown', 'startEvent');
 }
 function addMoveListener() {
   registerListener(this, 'touchmove', 'moveEvent');
-  registerListener(this, 'drag', 'moveEvent');
+  registerListener(this, 'mousemove', 'moveEvent');
 }
 function addEndListener() {
   registerListener(this, 'touchend', 'endEvent');
-  registerListener(this, 'dragend', 'endEvent');
+  registerListener(this, 'mouseup', 'endEvent');
+
+  registerListener(this, 'mouseleave', 'endEvent');
 }
 function removeListener() {
   this.target.removeEventListener('touchstart', eventBundle_start, { passive: true });
-  this.target.removeEventListener('dragstart', eventBundle_start, { passive: true });
+  this.target.removeEventListener('mousedown', eventBundle_start, { passive: true });
   this.target.removeEventListener('touchmove', eventBundle_move, { passive: true });
-  this.target.removeEventListener('drag', eventBundle_move, { passive: true });
+  this.target.removeEventListener('mousemove', eventBundle_move, { passive: true });
   this.target.removeEventListener('touchend', eventBundle_end, { passive: true });
-  this.target.removeEventListener('dragend', eventBundle_end, { passive: true });
+  this.target.removeEventListener('mouseup', eventBundle_end, { passive: true });
+  this.target.removeEventListener('mouseleave', eventBundle_end, { passive: true });
 }
 
 export { addStartListener, addMoveListener, addEndListener, removeListener };
